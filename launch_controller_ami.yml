@@ -14,6 +14,7 @@
     instance_type: "m5a.xlarge"
     zone: "use1-az6"
     user_data: ""
+    key_name: "emergent-tower"
 
   tasks:
   - name: Get the VPC ID for {{ ec2_name_prefix }}-vpc
@@ -67,7 +68,7 @@
 
   - name: "Start instances."
     ec2_instance:
-      key_name: "{{ ec2_name_prefix }}-key"
+      key_name: "{{ key_name }}"
       region: "{{ ec2_region }}"
       image_id: "{{ target_ami.image_id }}"
       instance_type: "{{ instance_type }}"
