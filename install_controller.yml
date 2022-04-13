@@ -4,7 +4,7 @@
   hosts: all
   gather_facts: no
   vars:
-    pool_name: "ansible-automation-platform-2.1-for-rhel-8-x86_64-rpms"
+    pool_ids: "8a85f9a17e6edc09017eba39f4fb325a"
     
   tasks:
   - name: remove amazon rhui client
@@ -30,8 +30,8 @@
       state: present
       activationkey: "{{ rh_activationkey }}"
       org_id: "{{ rh_org_id }}"
-      pool: "^{{ pool_name }}$"
-      force_register: yes
+      auto_attach: true
+      pool_ids: "{{ pool_ids | default(omit) }}"
     become: yes
     register: reg_sub
     until: reg_sub is not failed
