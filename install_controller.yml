@@ -90,9 +90,8 @@
     delay: 20
 
   - name: Extract AAP tar.gz install
-  unarchive:
-    src: "{{ tempdir.path }}/aap.tar.gz"
-    dest: "{{ aap_dir }}"
-    remote_src: true
-    extra_opts: ['--strip-components=1', '--show-stored-names']
-    
+    unarchive:
+      src: "{{ tempdir.path }}/aap.tar.gz"
+      dest: "{{ aap_dir }}"
+      remote_src: true
+      extra_opts: ['--strip-components=1', '--show-stored-names']
