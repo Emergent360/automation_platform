@@ -4,7 +4,9 @@
   hosts: all
   gather_facts: no
   vars:
-    pool_ids: "8a85f9a17e6edc09017eba39f4fb325a"
+    pool_ids: 
+      - 8a85f9a17e6edc09017eba39f4fb325a
+      - 8a85f9a079909242017a151629a068c5
     
   tasks:
   - name: remove amazon rhui client
