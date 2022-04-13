@@ -13,6 +13,7 @@
     instance_platform: "automation_controller"
     instance_type: "m5a.xlarge"
     zone: "use1-az6"
+    user_data: ""
 
   tasks:
   - name: Get the VPC ID for {{ ec2_name_prefix }}-vpc
