@@ -1,0 +1,57 @@
+---
+
+- name: "Install controller"
+  hosts: all
+  gather_facts: no
+  vars:
+    pool_name: "ansible-automation-platform-2.1-for-rhel-8-x86_64-rpms"
+    
+  tasks:
+  - name: remove amazon rhui client
+    command: yum -y remove rh-amazon-rhui-client*
+    args:
+      warn: false
+    become: yes
+
+  - name: clear repo config
+    command: rm -rf /etc/yum.repos.d/*
+    args:
+      warn: false
+    become: yes
+
+  - name: copy product-id.conf
+    copy:
+      src: product-id.conf
+      dest: /etc/yum/pluginconf.d/product-id.conf
+    become: yes
+    
+  - name: Register RHEL instance subscription
+    redhat_subscription:
+      state: present
+      activationkey: "{{ rh_activationkey }}"
+      org_id: "{{ rh_org_id }}"
+      auto_attach: true
+      pool: "^{{ pool_name }}$"
+    become: yes
+    register: reg_sub
+    until: reg_sub is not failed
+    retries: 5
+
+  - name: update and reboot
+    yum:
+      update_cache: yes
+      name: "*"
+      state: latest
+    become: yes
+
+  - name: Check for reboot needed
+    command: /usr/bin/needs-restarting -r
+    register: needs_reboot
+    ignore_errors: yes
+    failed_when: needs_reboot.rc >= 2
+    changed_when: needs_reboot.rc == 1
+
+  - name: Reboot if necessary
+    reboot:
+    when: needs_reboot.rc == 1
+    become: yes
