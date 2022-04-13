@@ -89,6 +89,11 @@
     retries: 15
     delay: 20
 
+  - name: Create directory for automation controller
+    file:
+      path: "{{ aap_dir }}"
+      state: directory
+
   - name: Extract AAP tar.gz install
     unarchive:
       src: "/home/ec2-user/aap.tar.gz"
