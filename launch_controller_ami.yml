@@ -9,7 +9,7 @@
     ec2_name_prefix: "default"
     ec2_region: "us-east-1"
     group_name: "automation_controller_sg"
-    instance_name: "automation controller"
+    instance_name: "Emergent Controller"
     instance_platform: "automation_controller"
     instance_type: "m5a.xlarge"
     zone: "use1-az6"
@@ -84,9 +84,6 @@
         ebs:
           volume_size: "{{ ebs_volume_size }}"
     register: ec2
-
-
-
 
   - name: "Wait for connection on all hosts."
     wait_for:
