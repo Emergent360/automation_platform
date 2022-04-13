@@ -11,6 +11,7 @@
     group_name: "automation_controller_sg"
     instance_name: "automation controller"
     instance_platform: "automation_controller"
+    instance_type: "m5a.xlarge"
     zone: "use1-az6"
 
   tasks:
