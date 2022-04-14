@@ -76,6 +76,12 @@
     retries: 15
     delay: 20
 
+  - name: check if aap.tar.gz exists
+    stat:
+      path: "{{ playbook_dir }}/aap.tar.gz"
+      checksum_algorithm: sha256
+    register: stat_var
+
   - name: Download aap.tar.gz
     get_url:
       url: "https://api.access.redhat.com/management/v1/images/{{ provided_sha_value }}/download"
@@ -88,6 +94,18 @@
     until: download_aap_tarball is not failed
     retries: 15
     delay: 20
+  when: not stat_var.stat.exists
+
+  - name: check if aap.tar.gz again (post download)
+  stat:
+    path: "{{ playbook_dir }}/aap.tar.gz"
+    checksum_algorithm: sha256
+  register: stat_var
+
+  - name: Verify sha256sum of aap.tar.gz
+    fail:
+      msg: "Failure, sha256sum does not match"
+    when: stat_var.stat.checksum != provided_sha_value
 
   - name: Create directory for automation controller
     file:
@@ -100,3 +118,8 @@
       dest: "{{ aap_dir }}"
       remote_src: true
       extra_opts: ['--strip-components=1', '--show-stored-names']
+
+  - name: template inventory file for Ansible Controller Install
+    template:
+      src: "controller_install.j2"
+      dest: "{{ aap_dir }}/inventory"
