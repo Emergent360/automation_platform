@@ -94,7 +94,7 @@
     until: download_aap_tarball is not failed
     retries: 15
     delay: 20
-  when: not stat_var.stat.exists
+    when: not stat_var.stat.exists
 
   - name: check if aap.tar.gz again (post download)
   stat:
