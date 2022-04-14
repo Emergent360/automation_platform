@@ -121,5 +121,5 @@
 
   - name: template inventory file for Ansible Controller Install
     template:
-      src: "controller_install.j2"
+      src: "standalone_controller_inventory.j2"
       dest: "{{ aap_dir }}/inventory"
