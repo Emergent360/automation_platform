@@ -130,3 +130,4 @@
     template:
       src: "standalone_controller_inventory.j2"
       dest: "{{ aap_dir }}/inventory"
+      backup: yes
