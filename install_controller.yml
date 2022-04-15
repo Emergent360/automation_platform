@@ -32,7 +32,7 @@
   - name: set repos to managed
     command: subscription-manager config --rhsm.manage_repos=1
     become: yes
-    
+
   - name: Register RHEL instance subscription
     redhat_subscription:
       state: present
@@ -45,6 +45,10 @@
     until: reg_sub is not failed
     retries: 5
 
+  - name: Enable ansible-automation-platform
+    command: subscription-manager repos --enable=ansible-automation-platform-2.1-for-rhel-8-x86_64-rpms
+    become: yes
+    
   - name: update and reboot
     yum:
       update_cache: yes
