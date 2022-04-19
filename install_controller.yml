@@ -1,73 +1,13 @@
 ---
 
-- name: "Install controller"
+- name: "install controller"
   hosts: all
   gather_facts: no
   vars:
-    pool_ids: 
-      - 8a85f9a17e6edc09017eba39f4fb325a
-      - 8a85f9a079909242017a151629a068c5
     offline_token: "eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJhZDUyMjdhMy1iY2ZkLTRjZjAtYTdiNi0zOTk4MzVhMDg1NjYifQ.eyJpYXQiOjE2NDk4NzQ3MDgsImp0aSI6ImM5YjIwNjJmLTlhOTItNDkwNi1iYzFjLTllNWQ2Njc5ZDMyOSIsImlzcyI6Imh0dHBzOi8vc3NvLnJlZGhhdC5jb20vYXV0aC9yZWFsbXMvcmVkaGF0LWV4dGVybmFsIiwiYXVkIjoiaHR0cHM6Ly9zc28ucmVkaGF0LmNvbS9hdXRoL3JlYWxtcy9yZWRoYXQtZXh0ZXJuYWwiLCJzdWIiOiJmOjUyOGQ3NmZmLWY3MDgtNDNlZC04Y2Q1LWZlMTZmNGZlMGNlNjpkcHVsbG1hbkBlbWVyZ2VudDM2MC5jb20iLCJ0eXAiOiJPZmZsaW5lIiwiYXpwIjoicmhzbS1hcGkiLCJzZXNzaW9uX3N0YXRlIjoiYWRmY2E2YzYtZGMyYy00ZGE2LWIwNDItMWE5NDY3MzY1MjA1Iiwic2NvcGUiOiJvZmZsaW5lX2FjY2VzcyIsInNpZCI6ImFkZmNhNmM2LWRjMmMtNGRhNi1iMDQyLTFhOTQ2NzM2NTIwNSJ9.K0765ZkHfMaIfdRD7L8prPG9iOyvHBAri9uVbU3-V9M"
     aap_dir: "/home/ec2-user/aap_install"
     
   tasks:
-  - name: remove amazon rhui client
-    command: yum -y remove rh-amazon-rhui-client*
-    args:
-      warn: false
-    become: yes
-
-  - name: clear repo config
-    command: rm -rf /etc/yum.repos.d/*
-    args:
-      warn: false
-    become: yes
-
-  - name: copy product-id.conf
-    copy:
-      src: product-id.conf
-      dest: /etc/yum/pluginconf.d/product-id.conf
-    become: yes
-  
-  - name: set repos to managed
-    command: subscription-manager config --rhsm.manage_repos=1
-    become: yes
-
-  - name: Register RHEL instance subscription
-    redhat_subscription:
-      state: present
-      activationkey: "{{ rh_activationkey }}"
-      org_id: "{{ rh_org_id }}"
-      auto_attach: true
-      pool_ids: "{{ pool_ids | default(omit) }}"
-    become: yes
-    register: reg_sub
-    until: reg_sub is not failed
-    retries: 5
-
-  - name: Enable ansible-automation-platform
-    command: subscription-manager repos --enable=ansible-automation-platform-2.1-for-rhel-8-x86_64-rpms
-    become: yes
-    
-  - name: update and reboot
-    yum:
-      update_cache: yes
-      name: "*"
-      state: latest
-    become: yes
-
-  - name: Check for reboot needed
-    command: /usr/bin/needs-restarting -r
-    register: needs_reboot
-    ignore_errors: yes
-    failed_when: needs_reboot.rc >= 2
-    changed_when: needs_reboot.rc == 1
-
-  - name: Reboot if necessary
-    reboot:
-    when: needs_reboot.rc == 1
-    become: yes
-
   - name: Generating an access token
     uri:
       url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
