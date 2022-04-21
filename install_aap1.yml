@@ -23,3 +23,12 @@
       file_type: directory
       patterns: "^ansible-tower-setup-.*$"
       use_regex: yes
+    register: setup_dir
+
+  - name: set symlink
+    ansible.builtin.file:
+      src: "{ setup_dir.files[0].path }"
+      dest: "/home/ec2-user/ansible-tower-setup"
+      owner: ec2-user
+      group: ec2-user
+      state: link
