@@ -20,5 +20,6 @@
   - name: get setup dir name
     ansible.builtin.find:
       path: /home/ec2-user
+      filetype: directory
       patterns: "^ansible-tower-setup-.*$"
       use_regex: yes
