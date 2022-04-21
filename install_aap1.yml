@@ -1,0 +1,31 @@
+---
+
+- name: "install aap1"
+  hosts: all
+  gather_facts: no
+
+  tasks:
+  - name: update and reboot
+    yum:
+      update_cache: yes
+      name: "*"
+      state: latest
+    become: yes
+
+  - name: Check for reboot needed
+    command: /usr/bin/needs-restarting -r
+    register: needs_reboot
+    ignore_errors: yes
+    failed_when: needs_reboot.rc >= 2
+    changed_when: needs_reboot.rc == 1
+
+  - name: Reboot if necessary
+    reboot:
+    when: needs_reboot.rc == 1
+    become: yes
+
+  - name: get tower setup tarball
+    uri:
+      url: https://releases.ansible.com/ansible-tower/setup/ansible-tower-setup-latest.tar.gz
+      creates: ansible-tower-setup-latest.tar.gz
+      dest: ansible-tower-setup-latest.tar.gz
