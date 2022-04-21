@@ -6,13 +6,20 @@
 
   tasks:
   - name: get tower setup tarball
-    uri:
+    ansible.builtin.uri:
       url: https://releases.ansible.com/ansible-tower/setup/ansible-tower-setup-latest.tar.gz
       creates: ansible-tower-setup-latest.tar.gz
       dest: ansible-tower-setup-latest.tar.gz
 
   - name: unarchive setup
-    unarchive:
+    ansible.builtin.unarchive:
       src: ansible-tower-setup-latest.tar.gz
       dest: /home/ec2-user
       remote_src: yes
+
+  - name: get setup dir name
+    ansible.builtin.find
+      path: /home/ec2-user
+      patterns: '^ansible-tower-setup-\d\.\d\.\d.*"
+      use_regex: yes
+      
