@@ -15,3 +15,4 @@
     unarchive:
       src: ansible-tower-setup-latest.tar.gz
       dest: /home/ec2-user
+      remote_src: yes
