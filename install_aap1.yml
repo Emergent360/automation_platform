@@ -38,3 +38,12 @@
       src: tower_inventory.j2
       dest: "/home/ec2-user/ansible-tower-setup/inventory"
       
+  - name: create aws credentials
+    ansible.builtin.template:
+      src: aws_credentials.j2
+      dest: "/home/.aws/credentials"
+
+  - name: create aws config
+    ansible.builtin.template:
+      src: aws_config.j2
+      dest: "/home/.aws/config"
