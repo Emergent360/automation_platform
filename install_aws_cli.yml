@@ -17,6 +17,12 @@
     dest: "/tmp"
     remote_src: yes
 
+- name: install aws cli
+  ansible.builtin.command:
+    cmd: /tmp/aws/install
+    creates: /usr/local/bin/aws
+  become: yes
+
 - name: create aws cred directory
   ansible.builtin.file:
     path: /home/ec2-user/.aws

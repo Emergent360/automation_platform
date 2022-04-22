@@ -38,5 +38,5 @@
       src: tower_inventory.j2
       dest: "/home/ec2-user/ansible-tower-setup/inventory"
   
-  - name: set aws cli
+  - name: install aws cli
     ansible.builtin.include_tasks: install_aws_cli.yml
