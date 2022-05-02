@@ -5,7 +5,6 @@
   gather_facts: no
   vars:
     offline_token: "eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJhZDUyMjdhMy1iY2ZkLTRjZjAtYTdiNi0zOTk4MzVhMDg1NjYifQ.eyJpYXQiOjE2NDk4NzQ3MDgsImp0aSI6ImM5YjIwNjJmLTlhOTItNDkwNi1iYzFjLTllNWQ2Njc5ZDMyOSIsImlzcyI6Imh0dHBzOi8vc3NvLnJlZGhhdC5jb20vYXV0aC9yZWFsbXMvcmVkaGF0LWV4dGVybmFsIiwiYXVkIjoiaHR0cHM6Ly9zc28ucmVkaGF0LmNvbS9hdXRoL3JlYWxtcy9yZWRoYXQtZXh0ZXJuYWwiLCJzdWIiOiJmOjUyOGQ3NmZmLWY3MDgtNDNlZC04Y2Q1LWZlMTZmNGZlMGNlNjpkcHVsbG1hbkBlbWVyZ2VudDM2MC5jb20iLCJ0eXAiOiJPZmZsaW5lIiwiYXpwIjoicmhzbS1hcGkiLCJzZXNzaW9uX3N0YXRlIjoiYWRmY2E2YzYtZGMyYy00ZGE2LWIwNDItMWE5NDY3MzY1MjA1Iiwic2NvcGUiOiJvZmZsaW5lX2FjY2VzcyIsInNpZCI6ImFkZmNhNmM2LWRjMmMtNGRhNi1iMDQyLTFhOTQ2NzM2NTIwNSJ9.K0765ZkHfMaIfdRD7L8prPG9iOyvHBAri9uVbU3-V9M"
-    aap_dir: "/home/ec2-user/aap_install"
     
   tasks:
   - name: Generating an access token
@@ -57,7 +56,6 @@
   - name: Extract AAP tar.gz install
     unarchive:
       src: "/home/ec2-user/aap.tar.gz"
-      dest: "{{ aap_dir }}"
       remote_src: true
       extra_opts: ['--strip-components=1', '--show-stored-names']
 
