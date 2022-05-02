@@ -88,5 +88,5 @@
     ansible.builtin.command: /home/ec2-user/ansible-automation-platform-setup/setup.sh
     become: yes
     args:
-      chdir:/home/ec2-user/ansible-automation-platform-setup
-      
+      chdir: /home/ec2-user/ansible-automation-platform-setup
+
