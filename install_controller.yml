@@ -80,3 +80,6 @@
       src: "standalone_controller_inventory.j2"
       dest: "/home/ec2-user/ansible-automation-platform-setup/inventory"
       backup: yes
+
+  - name: install aws cli
+    ansible.builtin.include_tasks: install_aws_cli.yml
