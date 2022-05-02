@@ -54,17 +54,28 @@
       msg: "Failure, sha256sum does not match"
     when: stat_var.stat.checksum != provided_sha_value
 
-  - name: Create directory for automation controller
-    file:
-      path: "{{ aap_dir }}"
-      state: directory
-
   - name: Extract AAP tar.gz install
     unarchive:
       src: "/home/ec2-user/aap.tar.gz"
       dest: "{{ aap_dir }}"
       remote_src: true
       extra_opts: ['--strip-components=1', '--show-stored-names']
+
+  - name: get setup dir name
+    ansible.builtin.find:
+      path: /home/ec2-user
+      file_type: directory
+      patterns: "^ansible-automation-platform-setup-.*$"
+      use_regex: yes
+    register: setup_dir
+
+  - name: set symlink
+    ansible.builtin.file:
+      src: "{{ setup_dir.files[0].path }}"
+      dest: "/home/ec2-user/ansible-tower-setup"
+      owner: ec2-user
+      group: ec2-user
+      state: link
 
   - name: template inventory file for Ansible Controller Install
     template:
