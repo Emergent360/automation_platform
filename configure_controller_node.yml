@@ -29,6 +29,7 @@
       activationkey: "{{ rh_activationkey }}"
       org_id: "{{ rh_org_id }}"
       pool_ids: "{{ pool_id }}"
+      force_register: yes
     become: yes
     register: reg_sub
     until: reg_sub is not failed
