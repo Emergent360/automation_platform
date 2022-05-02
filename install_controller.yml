@@ -54,7 +54,7 @@
     when: stat_var.stat.checksum != provided_sha_value
 
   - name: Extract AAP tar.gz install
-    unarchive:
+    ansible.builtin.unarchive:
       src: "/home/ec2-user/aap.tar.gz"
       dest: "/home/ec2-user/"
       remote_src: true
@@ -76,10 +76,17 @@
       state: link
 
   - name: template inventory file for Ansible Controller Install
-    template:
+    ansible.builtin.template:
       src: "standalone_controller_inventory.j2"
       dest: "/home/ec2-user/ansible-automation-platform-setup/inventory"
       backup: yes
 
   - name: install aws cli
     ansible.builtin.include_tasks: install_aws_cli.yml
+
+  - name: run setup
+    ansible.builtin.command: /home/ec2-user/ansible-automation-platform-setup/setup.sh
+    become: yes
+    args:
+      chdir:/home/ec2-user/ansible-automation-platform-setup
+      
