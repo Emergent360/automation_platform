@@ -10,7 +10,7 @@
     instance_name: "Test Emergent Controller"
     instance_platform: "automation_controller"
     instance_type: "m5x.xlarge"
-    zone: "use1-az6"
+    zone: "A"
     tier: "Public"
     user_data: ""
     key_name: "emergent-tower"
