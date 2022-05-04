@@ -7,7 +7,6 @@
     vol_device_name: "/dev/sda1"
     ebs_volume_size: "60"
     ec2_region: "us-east-1"
-    group_name: "automation_controller_sg"
     instance_name: "Test Emergent Controller"
     instance_platform: "automation_controller"
     instance_type: "m5x.xlarge"
@@ -38,8 +37,8 @@
     set_fact:
       group_id: "{{ group_info.security_groups | json_query(group_query) | first }}"
     vars:
-      group_query: "[?group_name=='{{ group_name }}'].group_id"
-      
+      group_query: "[?group_name=='{{ ec2_name_prefix }}-Public-SG'].group_id"
+     
   - name: Get the subnet info for {{ ec2_name_prefix }}-vpc
     ec2_vpc_subnet_info:
       region: "{{ ec2_region }}"
