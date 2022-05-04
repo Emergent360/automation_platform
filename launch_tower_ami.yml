@@ -11,6 +11,7 @@
     instance_platform: "automation_controller"
     instance_type: "m5x.xlarge"
     zone: "use1-az6"
+    tier: "Public"
     user_data: ""
     key_name: "emergent-tower"
 
