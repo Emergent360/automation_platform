@@ -38,6 +38,7 @@
 
   - name: enable repo
     command: subscription-manager repos --enable=ansible-automation-platform-2.1-for-rhel-8-x86_64-rpms
+    become: yes
     
   - name: update and reboot
     yum:
