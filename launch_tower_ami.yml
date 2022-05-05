@@ -77,6 +77,8 @@
       wait_timeout: 300
       tags:
         Name: "{{ ec2_name_prefix }} {{ instance_name }}"
+        Platform: "AAP Controller"
+        Inventory: "{{ ec2_name_prefix }}"
       user_data: "{{ user_data }}"
       volumes:
       - device_name: "{{ vol_device_name }}"
