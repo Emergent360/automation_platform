@@ -7,12 +7,6 @@
 
     
   tasks:
-  - debug:
-      var: hostvars[inventory_hostname]
-
-  - debug:
-      var: tags.Name
-
   - name: remove amazon rhui client
     command: yum -y remove rh-amazon-rhui-client*
     args:
@@ -35,7 +29,7 @@
       activationkey: "{{ rh_activationkey }}"
       org_id: "{{ rh_org_id }}"
       pool_ids: "{{ pool_id }}"
-      consumer_name: "{{ ec2_name_prefix }} Emergent Controller"
+      consumer_name: "{{ tags.Name }}"
       force_register: yes
     become: yes
     register: reg_sub
