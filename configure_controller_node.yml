@@ -29,11 +29,15 @@
       activationkey: "{{ rh_activationkey }}"
       org_id: "{{ rh_org_id }}"
       pool_ids: "{{ pool_id }}"
+      consumer_name: "{{ ec2_name_prefix }} Emergent Controller"
       force_register: yes
     become: yes
     register: reg_sub
     until: reg_sub is not failed
     retries: 5
+
+  - name: enable repo
+    command: subscription-manager repos --enable=ansible-automation-platform-2.1-for-rhel-8-x86_64-rpms
     
   - name: update and reboot
     yum:
