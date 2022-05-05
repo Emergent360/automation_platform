@@ -7,7 +7,7 @@
     vol_device_name: "/dev/sda1"
     ebs_volume_size: "60"
     ec2_region: "us-east-1"
-    instance_name: "Test Emergent Controller"
+    instance_name: "Emergent Controller"
     instance_platform: "automation_controller"
     instance_type: "m5a.xlarge"
     zone: "A"
@@ -76,7 +76,7 @@
       wait: yes
       wait_timeout: 300
       tags:
-        Name: "{{ instance_name }}"
+        Name: "{{ ec2_name_prefix }} {{ instance_name }}"
       user_data: "{{ user_data }}"
       volumes:
       - device_name: "{{ vol_device_name }}"
