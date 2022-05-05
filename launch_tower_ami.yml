@@ -13,7 +13,7 @@
     zone: "A"
     tier: "Public"
     user_data: ""
-    key_name: "emergent-tower"
+    key_name: "{{ ec2_name_prefix }}-key"
 
   tasks:
   - name: Get the VPC ID for {{ ec2_name_prefix }}-vpc
