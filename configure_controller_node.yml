@@ -9,7 +9,10 @@
   tasks:
   - debug:
       var: hostvars[inventory_hostname]
-      
+
+  - debug:
+      var: tags.Name
+
   - name: remove amazon rhui client
     command: yum -y remove rh-amazon-rhui-client*
     args:
