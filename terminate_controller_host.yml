@@ -1,0 +1,14 @@
+---
+- name: "Deregister RHEL subscription"
+  hosts: all
+  gather_facts: no
+
+  roles:
+  - deregister_rhel_subscription
+  
+- name: "Terminate RHEL AMIs"
+  hosts: localhost
+  gather_facts: no
+
+  roles:
+  - terminate_ami
